@@ -16,7 +16,7 @@ const express_1 = __importDefault(require("express"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const db_1 = require("./db");
 const middilware_1 = require("./middilware");
-const config_1 = require("./config");
+const jwt_password = process.env.jwt_password;
 // import { SupervisedUserCircleOutlined } from '@mui/icons-material'
 const utils_1 = require("./utils");
 const cors_1 = __importDefault(require("cors"));
@@ -42,9 +42,9 @@ app.post("/api/v1/signin", (req, res, next) => __awaiter(void 0, void 0, void 0,
         //     {
         //         res.send{"Invalid username and password"}
         //     }
-        if (existing) {
+        if (existing && jwt_password) {
             // console.log(existing.id,jwt_password)
-            const token = jsonwebtoken_1.default.sign({ id: existing._id }, config_1.jwt_password);
+            const token = jsonwebtoken_1.default.sign({ id: existing._id }, jwt_password);
             // console.log(token)
             res.json({ token });
             next();
@@ -148,15 +148,16 @@ app.get('/api/v1/content/:sharelink', (req, res) => __awaiter(void 0, void 0, vo
     }
     //userid se content fetch
     const content = yield db_1.ContentModel.find({ userId: link.userId });
-    console.log(content);
+    // console.log(content)
     const user = yield db_1.UserModel.findOne({ _id: link.userId });
-    console.log(user);
+    // console.log(user)
     if (!user) {
         res.json({ message: "user not found or maybe users link is not found" });
         return;
     }
     res.json({
-        content: content
+        userId: link.userId,
+        username: user.username, content: content,
     });
 }));
 app.listen(3000);

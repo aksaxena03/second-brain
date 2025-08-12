@@ -35,10 +35,14 @@ var __importStar = (this && this.__importStar) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LinkModel = exports.ContentModel = exports.TagModel = exports.UserModel = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
-const config_1 = require("./config");
-mongoose_1.default.connect(config_1.db_url)
-    .then(() => console.log('Connected!'))
-    .catch((error) => console.error('Connection error:', error));
+// import {db_url} from './config'
+const db_url = process.env.db_url;
+if (db_url) {
+    mongoose_1.default.connect(db_url).then(() => console.log('Connected!')).catch((error) => console.error('Connection error:', error));
+}
+else {
+    console.error('Database URL is not defined. Please set the db_url environment variable.');
+}
 const UserSchema = new mongoose_1.Schema({
     username: { type: String, unique: true },
     password: String

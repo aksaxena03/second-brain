@@ -1,10 +1,13 @@
 import mongoose, { model, Schema } from 'mongoose'
 import { string } from 'zod';
-import {db_url} from './config'
+// import {db_url} from './config'
+const db_url=process.env.db_url
 
-mongoose.connect(db_url)
-  .then(() => console.log('Connected!'))
-  .catch((error) => console.error('Connection error:', error));
+if (db_url) {
+  mongoose.connect(db_url).then(() => console.log('Connected!')).catch((error) => console.error('Connection error:', error));
+} else {
+  console.error('Database URL is not defined. Please set the db_url environment variable.');
+}
 
 const UserSchema = new Schema({
   username: { type: String, unique: true },

@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 import jwt, { JsonWebTokenError } from 'jsonwebtoken'
 import { ContentModel, LinkModel, UserModel } from './db'
 import { auth } from './middilware'
-import { jwt_password } from './config'
+const jwt_password =process.env.jwt_password
 // import { SupervisedUserCircleOutlined } from '@mui/icons-material'
 import { random } from './utils'
 import cors from "cors"
@@ -33,7 +33,7 @@ app.post("/api/v1/signin", async (req, res, next) => {
         //     {
         //         res.send{"Invalid username and password"}
         //     }
-        if (existing) {
+        if (existing && jwt_password) {
             // console.log(existing.id,jwt_password)
             const token = jwt.sign({ id: existing._id }, jwt_password)
             // console.log(token)
@@ -144,9 +144,9 @@ app.get('/api/v1/content/:sharelink', async (req, res) => {
     }
     //userid se content fetch
     const content = await ContentModel.find({ userId: link.userId })
-    console.log(content)
+    // console.log(content)
     const user = await UserModel.findOne({ _id: link.userId })
-    console.log(user)
+    // console.log(user)
     if (!user) {
         res.json({ message: "user not found or maybe users link is not found" })
         return
