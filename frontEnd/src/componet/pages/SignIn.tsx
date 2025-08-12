@@ -1,6 +1,6 @@
 import axios from "axios"
 import { Brain as BrainLogo } from "../Logo/Brain"
-import { Backend_url } from "../../../config"
+const Backend_url="http://second-brain-tj7m.onrender.com/";
 import { useRef, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { Button } from "../Button"

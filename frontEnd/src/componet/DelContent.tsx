@@ -1,7 +1,8 @@
 import axios from "axios";
 import { Button } from "./Button";
 import DeleteIcon from "./DeleteIcon";
-import { Backend_url } from "../../config";
+const Backend_url="http://second-brain-tj7m.onrender.com/";
+
 
 export function DelContent({ _id }: { _id: string }) {
     async function handleDelete() {

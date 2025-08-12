@@ -1,6 +1,7 @@
 import axios from "axios"
 import { useEffect, useState, useCallback } from "react"
-import { Backend_url } from "../../../config"
+const Backend_url="http://second-brain-tj7m.onrender.com/";
+
 
 interface Content {
     // Define your content type here

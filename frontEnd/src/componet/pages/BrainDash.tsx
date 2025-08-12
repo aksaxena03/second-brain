@@ -7,7 +7,8 @@ import {useEffect, useState } from 'react'
 import {SidePanel} from "../SidePanel"
 import { useContent } from '../hooks/useContent'
 import axios from 'axios'
-import { Backend_url } from '../../../config'
+const Backend_url="http://second-brain-tj7m.onrender.com/";
+
 
 
 function Brain() {

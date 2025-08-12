@@ -2,7 +2,7 @@ import { useRef } from "react"
 import axios from 'axios'
 import {Brain as BrainLogo} from "../Logo/Brain"
 import { Button } from "../Button"
-import {Backend_url} from "../../../config"
+const Backend_url="http://second-brain-tj7m.onrender.com/";
 import { useNavigate } from "react-router-dom"
 export default function SignUp() {
   const usernameRef=useRef<HTMLInputElement>(null)
