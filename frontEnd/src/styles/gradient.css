@@ -1,0 +1,23 @@
+.animated-gradient {
+  background: linear-gradient(
+    -45deg,
+    #0f0c29,  /* deep indigo */
+    #1a1a40,  /* midnight purple */
+    #001f2e,  /* deep teal */
+    #330033   /* dark magenta */
+  );
+  background-size: 400% 400%;
+  animation: gradientBG 30s ease-in-out infinite; /* Slower & smoother */
+}
+
+@keyframes gradientBG {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
