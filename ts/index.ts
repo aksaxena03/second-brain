@@ -1,4 +1,5 @@
-import express from 'express'
+import 'dotenv/config'
+import express, { Request, Response, NextFunction } from 'express'
 import mongoose from 'mongoose'
 import jwt, { JsonWebTokenError } from 'jsonwebtoken'
 import { ContentModel, LinkModel, UserModel } from './db'
@@ -25,28 +26,24 @@ app.post("/api/v1/signup", async (req, res) => {
     }
 
 })
-app.post("/api/v1/signin", async (req, res, next) => {
+app.post("/api/v1/signin", async (req: Request, res: Response) => {
     const { username, password } = req.body
     try {
         const existing = await UserModel.findOne({ username, password })
-        //  if (username!==verfying.username && password!=verfying.password)
-        //     {
-        //         res.send{"Invalid username and password"}
-        //     }
         if (existing && jwt_password) {
-            // console.log(existing.id,jwt_password)
             const token = jwt.sign({ id: existing._id }, jwt_password)
-            // console.log(token)
             res.json({ token })
-            next()
+            return;
         } else {
-            res.json({ message: "Invalid username and password or credentials" })
+            res.status(401).json({ message: "Invalid username and password or credentials" })
+            return;
         }
     } catch (e) {
         res.status(404).json({ message: 'user not found' })
+        return;
     }
 })
-app.post('/api/v1/content', auth, async (req, res) => {
+app.post('/api/v1/content', auth, async (req: Request, res: Response) => {
     const link = req.body.link
     const title = req.body.title
     const Type = req.body.Type
@@ -61,7 +58,7 @@ app.post('/api/v1/content', auth, async (req, res) => {
     res.json({ message: 'content added' })
 
 })
-app.get('/api/v1/content', auth, async (req, res) => {
+app.get('/api/v1/content', auth, async (req: Request, res: Response) => {
     //@ts-ignore
     const userId = (req.userId)
     const content = await ContentModel.find({ userId }).populate("userId", "username")
@@ -71,7 +68,7 @@ app.get('/api/v1/content', auth, async (req, res) => {
 
 //Delete content
 
-app.delete('/api/v1/content', auth, async (req, res) => {
+app.delete('/api/v1/content', auth, async (req: Request, res: Response) => {
     try {
         const { contentId } = req.body;
         const _id = contentId.toString()
@@ -103,7 +100,7 @@ app.delete('/api/v1/content', auth, async (req, res) => {
     }
 });
 
-app.post('/api/v1/content/share', auth, async (req, res) => {
+app.post('/api/v1/content/share', auth, async (req: Request, res: Response) => {
     // console.log(req.body+"......"+req.body.share)
     let share = req.body.share;
     //@ts-ignore
@@ -133,13 +130,13 @@ app.post('/api/v1/content/share', auth, async (req, res) => {
     }
 
 })
-app.get('/api/v1/content/:sharelink', async (req, res) => {
+app.get('/api/v1/content/:sharelink', async (req: Request, res: Response) => {
     const hash = req.params.sharelink;
     console.log(hash)
     const link = await LinkModel.findOne({ hash })
     console.log(link)
     if (!link) {
-        res.status(141).json({ message: "link is broken" })
+        res.status(404).json({ message: "link is broken" })
         return
     }
     //userid se content fetch

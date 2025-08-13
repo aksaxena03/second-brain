@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import mongoose, { model, Schema } from 'mongoose'
 import { string } from 'zod';
 // import {db_url} from './config'
