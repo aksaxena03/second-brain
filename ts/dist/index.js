@@ -38,23 +38,19 @@ app.post("/api/v1/signin", (req, res, next) => __awaiter(void 0, void 0, void 0,
     const { username, password } = req.body;
     try {
         const existing = yield db_1.UserModel.findOne({ username, password });
-        //  if (username!==verfying.username && password!=verfying.password)
-        //     {
-        //         res.send{"Invalid username and password"}
-        //     }
         if (existing && jwt_password) {
-            // console.log(existing.id,jwt_password)
             const token = jsonwebtoken_1.default.sign({ id: existing._id }, jwt_password);
-            // console.log(token)
             res.json({ token });
-            next();
+            return;
         }
         else {
-            res.json({ message: "Invalid username and password or credentials" });
+            res.status(401).json({ message: "Invalid username and password or credentials" });
+            return;
         }
     }
     catch (e) {
         res.status(404).json({ message: 'user not found' });
+        return;
     }
 }));
 app.post('/api/v1/content', middilware_1.auth, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -143,7 +139,7 @@ app.get('/api/v1/content/:sharelink', (req, res) => __awaiter(void 0, void 0, vo
     const link = yield db_1.LinkModel.findOne({ hash });
     console.log(link);
     if (!link) {
-        res.status(141).json({ message: "link is broken" });
+        res.status(404).json({ message: "link is broken" });
         return;
     }
     //userid se content fetch
