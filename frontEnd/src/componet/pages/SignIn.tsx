@@ -5,7 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "../Button";
 import "../../styles/gradient.css"; // For animated background
 
-const Backend_url = process.env.Backend_url;
+const Backend_url = import.meta.env.VITE_Backend_url
+
 
 
 

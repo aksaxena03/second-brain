@@ -8,8 +8,7 @@ import { SidePanel } from "../SidePanel";
 import { useContent } from '../hooks/useContent';
 import axios from 'axios';
 import "../../styles/gradient.css"; // For animated background
-
-const Backend_url = process.env.Backend_url;
+const Backend_url = import.meta.env.VITE_Backend_url
 
 
 function Brain() {

@@ -1,60 +1,72 @@
-import axios from "axios"
-import Card from "./Card"
-import { SidePanel } from "./SidePanel"
-import { useEffect, useState } from "react"
-const Backend_url = process.env.Backend_url;
+import axios from "axios";
+import Card from "./Card";
+import { SidePanel } from "./SidePanel";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
+const Backend_url = import.meta.env.VITE_Backend_url;
 
-
-import { useNavigate, useParams } from "react-router-dom"
-function SharedBrain() {
-    let navigate=useNavigate()
-    let params = useParams()
-    const [content, setContent] = useState<Content | null>()
-
-    interface Content{
-        title:string
-        Type:any
-        link:string
-        _id?:any
-        [key: string]: any;
-
-    }
-    const handelContent = async () => {
-      
-       if(params) {  console.log("at handelContent" +params.sharedlink)
-        const response = await axios.get(`${Backend_url}/api/v1/content/${params.sharedlink}`)
-        console.log(response)
-        setContent(response.data.content)}else{navigate('/signin')}
-    }
-        console.log(content)
-
-    console.log("parmas not found"+content +params.sharedlink )
-    useEffect(() => {
-        handelContent()
-    }, [params])
-
-    return (
-        <div className='bg-gray-100 flex  h-full'>
-                    {content?
-            <div className="">
-                <div className="flex fixed w-[10%] sm:w-[20%] h-[100%] z-1 border-b-sm border-black"><SidePanel/></div>
-                        <div className="h-full w-[60%] lg:w-[80%] md:w-[70%] flex flex-col items-end absolute right-10">
-                        <div className="cards pt-8 end-0 flex gap-2 md:gap-4 flex-wrap justify-end z-0.2  ">
-                            {content && content.map(({title, Type, link, _id}:Content) => (
-                                <Card 
-                                    title={title} 
-                                    Type={Type}
-                                    link={link} 
-                                    _id={_id}
-                                />
-                            ))}
-                        </div>
-                    </div>
-                        
-            </div>
-            :"link not found"}
-        </div>
-    )
+interface Content {
+  title: string;
+  Type: "youtube" | "facebook" | "x" | "document";
+  link: string;
+  _id?: string;
 }
-export default SharedBrain
+
+function SharedBrain() {
+  const navigate = useNavigate();
+  const params = useParams<{ sharedlink: string }>();
+  const [content, setContent] = useState<Content[]>([]);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleContent = async () => {
+    try {
+      if (!params.sharedlink) {
+        navigate("/signin");
+        return;
+      }
+      const response = await axios.get(
+        `${Backend_url}/api/v1/content/${params.sharedlink}`
+      );
+
+      if (Array.isArray(response.data.content)) {
+        setContent(response.data.content);
+      } else {
+        setError("No shared content found.");
+      }
+    } catch (err) {
+      console.error(err);
+      setError("Invalid or expired link.");
+    }
+  };
+
+  useEffect(() => {
+    handleContent();
+  }, [params.sharedlink]);
+
+  return (
+    <div className="min-h-screen w-full bg-gradient-to-br from-gray-900 via-black to-gray-800 text-white flex">
+      {error ? (
+        <div className="m-auto text-center">
+          <p className="text-red-400 text-xl">{error}</p>
+        </div>
+      ) : (
+        <div className="flex w-full">
+          <div className="fixed w-[10%] sm:w-[20%] h-full border-r border-gray-700">
+            <SidePanel />
+          </div>
+
+          <div className="ml-[10%] sm:ml-[20%] w-full p-6">
+            <div className="flex flex-wrap gap-4 justify-start">
+              {content.map(({ title, Type, link, _id }) => (
+                <Card key={_id} title={title} Type={Type} link={link} _id={_id!} />
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default SharedBrain;
