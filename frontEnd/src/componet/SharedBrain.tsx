@@ -2,7 +2,9 @@ import axios from "axios"
 import Card from "./Card"
 import { SidePanel } from "./SidePanel"
 import { useEffect, useState } from "react"
-const Backend_url="http://second-brain-tj7m.onrender.com/";
+const Backend_url = process.env.Backend_url;
+
+
 
 import { useNavigate, useParams } from "react-router-dom"
 function SharedBrain() {

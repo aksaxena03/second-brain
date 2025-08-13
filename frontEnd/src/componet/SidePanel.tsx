@@ -3,7 +3,7 @@ import { Brain as BrainLogo } from "./Logo/Brain"
 import { Button } from './Button'
 export function SidePanel() {
         return (
-            <div className=" bg-white top-0 my-0 start-0 shadow-xl flex flex-col ">
+            <div className="top-0 my-0 start-0 shadow-xl flex flex-col ">
                 <div className=" ps-2.5 pt-1.5">
                     <Button variant="none" startIcon={<BrainLogo />} text='Second Brain' className='flex p-4 text-xl text-blue-500 mb-8' />
                     <div className="flex flex-col w-[75%] md:w-[100%] gap-2.5 size-3 ml-3">

@@ -1,113 +1,136 @@
-import axios from "axios"
-import { Brain as BrainLogo } from "../Logo/Brain"
-const Backend_url="http://second-brain-tj7m.onrender.com/";
-import { useRef, useState } from "react"
-import { useNavigate } from "react-router-dom"
-import { Button } from "../Button"
+import axios from "axios";
+import { Brain as BrainLogo } from "../Logo/Brain";
+import { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Button } from "../Button";
+import "../../styles/gradient.css"; // For animated background
+
+const Backend_url = process.env.Backend_url;
+
+
 
 export default function SignIn() {
+  const usernameRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
+  const [done, setDone] = useState<boolean>(true);
 
-  const usernameRef = useRef<HTMLInputElement>(null)
-  const passwordRef = useRef<HTMLInputElement>(null)
-  const navigate = useNavigate()
-  let [done, setDone] = useState<Boolean>(true)
   async function signin() {
     try {
-      const username = usernameRef.current?.value
-      const password = passwordRef.current?.value
-      setDone(true)
-      if (username != "") {
-        console.log(username, password);
-        const response = await axios.post(`${Backend_url}/api/v1/signin`,
-          { username, password }
-        );
+      const username = usernameRef.current?.value;
+      const password = passwordRef.current?.value;
+      setDone(true);
+
+      if (username && username.trim() !== "") {
+        const response = await axios.post(`${Backend_url}/api/v1/signin`, {
+          username,
+          password,
+        });
         const jwt = response.data.token;
-        localStorage.setItem("token", jwt)
-        { username != "" && password != "" ? navigate("/Dash") : alert("invalid data") }
+        localStorage.setItem("token", jwt);
 
+        if (username !== "" && password !== "") {
+          navigate("/Dash");
+        } else {
+          alert("Invalid data");
+        }
       } else {
-        setDone(false)
-        throw new Error()
+        setDone(false);
+        throw new Error();
       }
-
     } catch {
-      setDone(false)
-      alert("invalid username and password")
+      setDone(false);
+      alert("Invalid username or password");
     }
   }
+
   return (
-
-
-    
-
-      <div className="flex min-h-full flex-1 flex-col justify-center px-2 py-12 lg:px-8">
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <div className="flex items-center"><BrainLogo size="size-16" />
-            <h2 className=" text-blue-500 ml-2 text-center text-5xl font-bold tracking-tight">
-              Second Brain
-            </h2></div>
-          <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
-            Sign in to your account
+    <div className="animated-gradient min-h-screen flex items-center justify-center px-4">
+      <div className=" backdrop-blur-lg bg-white/10 rounded-3xl p-8 shadow-[0_0_30px_rgba(0,255,255,0.5)] border border-cyan-400 w-full max-w-md">
+        {/* Logo & Title */}
+        <div className="flex items-center justify-center">
+          <BrainLogo size="size-16" />
+          <h2 className="ml-2 text-cyan-300 text-4xl font-extrabold tracking-tight">
+            Second Brain
           </h2>
         </div>
+        <h2 className="mt-6 text-center text-lg font-semibold text-white">
+          Sign in to your account
+        </h2>
 
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form action="#" method="POST" className="space-y-6">
-            <div>
-              <label htmlFor="UserName" className="block text-sm/6 font-medium text-gray-900">
-                UserName
+        {/* Form */}
+        <form className="mt-8 space-y-6">
+          {/* Username */}
+          <div>
+            <label
+              htmlFor="UserName"
+              className="block text-sm font-medium text-white"
+             >
+              Username
+            </label>
+            <input
+              ref={usernameRef}
+              id="UserName"
+              name="UserName"
+              type="text"
+              required
+              className="mt-2 block w-full rounded-md bg-black/30 border border-cyan-400 px-3 py-2 text-white placeholder-cyan-200 focus:border-pink-400 focus:ring-pink-400 outline-none"
+              placeholder="Enter your username"
+            />
+          </div>
+
+          {/* Password */}
+          <div>
+            <div className="flex items-center justify-between">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-white"
+              >
+                Password
               </label>
-              <div className="mt-2">
-                <input ref={usernameRef}
-                  id="UserName"
-                  name="UserName"
-                  type="UserName"
-                  required
-                  autoComplete="UserName"
-                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                />
-              </div>
+              <a
+                href="#"
+                className="text-sm font-semibold text-pink-300 hover:text-pink-200"
+              >
+                Forgot password?
+              </a>
             </div>
+            <input
+              ref={passwordRef}
+              id="password"
+              name="password"
+              type="password"
+              required
+              className="mt-2 block w-full rounded-md bg-black/30 border border-cyan-400 px-3 py-2 text-white placeholder-cyan-200 focus:border-pink-400 focus:ring-pink-400 outline-none"
+              placeholder="Enter your password"
+            />
+            {!done && (
+              <div className="p-2 mt-3 text-sm text-red-400 bg-red-900/30 rounded-md border border-red-500">
+                Wrong username or password
+              </div>
+            )}
+          </div>
 
-            <div>
-              <div className="flex items-center justify-between">
-                <label htmlFor="password" className="block text-sm/6 font-medium text-gray-900">
-                  Password
-                </label>
-                <div className="text-sm">
-                  <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
-                    Forgot password?
-                  </a>
-                </div>
-              </div>
-              <div className="mt-2">
-                <input ref={passwordRef}
-                  id="password"
-                  name="password"
-                  type="password"
-                  required
-                  autoComplete="current-password"
-                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
-                {done ? null :
-                  <div className="p-4 mb-4 text-sm text-red-800 rounded-lg  dark:text-blue-400"
-                    role="alert">
-                    <span className="font-medium">Wrong password & username</span> </div>}
-              </div>
-            </div>
-            <div>
-              <Button onClick={signin} variant="primary" text="SignUp" className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" >
-              </Button>
-            </div>
-          </form>
+          {/* Submit Button */}
+          <Button
+            onClick={signin}
+            variant="primary"
+            text="Sign In"
+            className="w-full rounded-md mx-auto bg-cyan-500 px-3 py-2 font-semibold text-white shadow-lg hover:bg-cyan-400  focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300 transition"
+          />
+        </form>
 
-          <p className="mt-10 text-center text-sm/6 text-gray-500">
-            Not a member?{' '}
-            <a href={`/signup`} className="font-semibold text-indigo-600 hover:text-indigo-500">
-              Create Account
-            </a>
-          </p>
-        </div>
+        {/* Not a member */}
+        <p className="mt-6 text-center text-sm text-pink-200">
+          Not a member?{" "}
+          <a
+            href="/signup"
+            className="font-semibold text-cyan-300 hover:text-cyan-200"
+          >
+            Create an account
+          </a>
+        </p>
       </div>
-    
-  )
+    </div>
+  );
 }
