@@ -52,3 +52,11 @@ export default tseslint.config({
   },
 })
 ```
+
+# Frontend deployment notes
+
+- Configure environment variable on Vercel:
+  - `VITE_Backend_url` = your backend base URL (e.g., https://api.example.com)
+- The app uses client-side routing; `vercel.json` includes a rewrite to `index.html`.
+- Build command: `npm run build`
+- Output directory: `dist`

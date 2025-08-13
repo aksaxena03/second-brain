@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Button } from "./Button";
 import DeleteIcon from "./DeleteIcon";
-const Backend_url="http://second-brain-tj7m.onrender.com/";
+const Backend_url = import.meta.env.VITE_Backend_url
 
 
 export function DelContent({ _id }: { _id: string }) {
