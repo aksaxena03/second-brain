@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: brainly-backend
+    env: node
+    rootDir: ts
+    buildCommand: npm ci && npm run build
+    startCommand: npm run start
+    plan: free
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: jwt_password
+        sync: false
+      - key: db_url
+        sync: false
+    healthCheckPath: /healthz
