@@ -160,4 +160,10 @@ app.get('/api/v1/content/:sharelink', (req, res) => __awaiter(void 0, void 0, vo
         username: user.username, content: content,
     });
 }));
-app.listen(3000);
+app.get('/healthz', (_req, res) => {
+    res.status(200).json({ ok: true });
+});
+const port = parseInt(process.env.PORT || '3000', 10);
+app.listen(port, '0.0.0.0', () => {
+    console.log(`Server running on port ${port}`);
+});
