@@ -5,10 +5,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.auth = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const config_1 = require("./config");
+const jwt_password = process.env.jwt_password;
 const auth = (req, res, next) => {
     const header = req.headers["authorization"];
-    const decode = jsonwebtoken_1.default.verify(header, config_1.jwt_password);
+    const decode = jsonwebtoken_1.default.verify(header, jwt_password);
     // console.log(header ,decode)
     if (decode) {
         //@ts-ignore
