@@ -1,6 +1,6 @@
 import axios from "axios"
 import { useEffect, useState, useCallback } from "react"
-const Backend_url="http://second-brain-tj7m.onrender.com/";
+const Backend_url = import.meta.env.VITE_Backend_url
 
 
 interface Content {

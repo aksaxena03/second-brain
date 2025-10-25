@@ -35,7 +35,7 @@ function Brain() {
             }
         });
 
-        const shareUrl = `http://localhost:5173${response.data.hash}`;
+        const shareUrl = `${window.location.origin}${response.data.hash}`;
         navigator.clipboard.writeText(shareUrl);
         alert(`Share link copied: ${shareUrl}`);
     };

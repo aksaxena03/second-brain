@@ -3,10 +3,10 @@ import {Input} from "./Input"
 import {Button} from "./Button"
 import { useRef, useState } from "react"
 import axios from "axios"
-const Backend_url="http://second-brain-tj7m.onrender.com/";
+const Backend_url = import.meta.env.VITE_Backend_url
 
 import { useNavigate } from "react-router-dom"
-type CreateContentProps = {
+ type CreateContentProps = {
     open: boolean;
     OnClose: () => void;
   };
