@@ -26,8 +26,8 @@ export function Button(props: Btn) {
         <button
             type='button'
             onClick={props.onClick}
-            className={`${BtnStyle[props.variant]} ${props.className} px-3 py-2 mx-auto rounded-md font-semibold `}>
-            <div className='flex flex-row'>{props.startIcon}
+            className={`${BtnStyle[props.variant]} ${props.className} px-3 py-2 mx-4 rounded-md font-semibold `}>
+            <div className='flex flex-row justify-center'>{props.startIcon}
                 <div className="pl-1">{props.text}</div></div>
         </button>
     )

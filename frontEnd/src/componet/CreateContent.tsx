@@ -34,7 +34,7 @@ export function CreateContent({open, OnClose}: CreateContentProps){
        <div className="">
 
          {open && <div className="size-full fixed flex justify-center items-center backdrop-blur-sm ">
-            <div className="flex flex-col w-1/4 h-2/5 bg-white rounded-xl shadow-5xl border-black ">
+            <div className="flex flex-col w-1/4 bg-white rounded-xl shadow-5xl border-black pb-2.5 ">
                    <div className="flex justify-end px-2.5 py-3 w-full items-start ">
                         <button onClick={OnClose}><CloseIcon/></button>
                     </div> 

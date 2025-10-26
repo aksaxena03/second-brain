@@ -21,8 +21,7 @@ app.post("/api/v1/signup", async (req, res) => {
         )
         res.json({ message: 'User created successfully' })
     } catch (e) {
-        res.status(404).json({ message: "user exists" })
-
+        res.status(404).json({ message: "user exists",e:e })
     }
 
 })

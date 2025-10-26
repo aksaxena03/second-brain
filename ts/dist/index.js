@@ -12,6 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+require("dotenv/config");
 const express_1 = __importDefault(require("express"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const db_1 = require("./db");
@@ -31,10 +32,10 @@ app.post("/api/v1/signup", (req, res) => __awaiter(void 0, void 0, void 0, funct
         res.json({ message: 'User created successfully' });
     }
     catch (e) {
-        res.status(404).json({ message: "user exists" });
+        res.status(404).json({ message: "user exists", e: e });
     }
 }));
-app.post("/api/v1/signin", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+app.post("/api/v1/signin", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { username, password } = req.body;
     try {
         const existing = yield db_1.UserModel.findOne({ username, password });

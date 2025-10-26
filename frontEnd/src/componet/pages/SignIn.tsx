@@ -117,7 +117,7 @@ export default function SignIn() {
             onClick={signin}
             variant="primary"
             text="Sign In"
-            className="w-full rounded-md mx-auto bg-cyan-500 px-3 py-2 font-semibold text-white shadow-lg hover:bg-cyan-400  focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300 transition"
+            className="w-full rounded-md  bg-cyan-500 py-2 font-semibold text-white shadow-lg hover:bg-cyan-400  focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300 transition"
           />
         </form>
 

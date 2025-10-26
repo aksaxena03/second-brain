@@ -34,6 +34,7 @@ var __importStar = (this && this.__importStar) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LinkModel = exports.ContentModel = exports.TagModel = exports.UserModel = void 0;
+require("dotenv/config");
 const mongoose_1 = __importStar(require("mongoose"));
 const config_1 = require("./config");
 if (config_1.config.db_url) {
