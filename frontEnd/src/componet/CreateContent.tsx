@@ -33,7 +33,7 @@ export function CreateContent({open, OnClose}: CreateContentProps){
     return(
        <div className="">
 
-         {open && <div className="size-full fixed flex justify-center items-center backdrop-blur-sm ">
+         {open && <div className="size-full fixed flex justify-center items-center backdrop-blur-sm z-0 ">
             <div className="flex flex-col w-1/4 bg-white rounded-xl shadow-5xl border-black pb-2.5 ">
                    <div className="flex justify-end px-2.5 py-3 w-full items-start ">
                         <button onClick={OnClose}><CloseIcon/></button>
@@ -44,7 +44,7 @@ export function CreateContent({open, OnClose}: CreateContentProps){
 
                         <div className="w-full ">
                            <h2>Type:</h2> 
-                        <div className="grid grid-cols-2 gap-2">
+                        <div className="grid grid-cols-2 gap-2 overflow-hidden">
                                     {[
                                         { id: 'youtube', label: 'Youtube' },
                                         { id: 'facebook', label: 'Facebook' },
@@ -64,7 +64,7 @@ export function CreateContent({open, OnClose}: CreateContentProps){
                                         </div>
                                     ))}
                                 </div>
-                        <Button onClick={create} variant="primary" text="Save" className="w-full mt-7 flex justify-center"/>
+                        <Button onClick={create} variant="primary" text="Save" className="w-full mt-7 ml-[-2px] flex justify-center"/>
 
                         </div>
                     </div>

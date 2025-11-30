@@ -13,6 +13,6 @@ export function DelContent({ _id }: { _id: string }) {
     }
 
     return (
-        <Button variant="none" onClick={handleDelete} startIcon={<DeleteIcon />} text="Delete" />
+        <Button variant="none" onClick={handleDelete} startIcon={<DeleteIcon />} className="ml-[-2px]" text="Delete" />
     );
 }
