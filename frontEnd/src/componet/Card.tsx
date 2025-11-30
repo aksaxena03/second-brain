@@ -51,7 +51,7 @@ const Card = (props: CardLay) => {
                         {logos[Type]}
                         <span className="truncate max-w-[8rem]">{title}</span>
                     </div>
-                    <div className="flex gap-2 items-center size-0.5">
+                    <div className="flex gap-2 items-center">
                         <ShareIcon />
                         {verify ? <DelContent _id={_id} /> : null}
                     </div>
